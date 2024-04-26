@@ -13,6 +13,7 @@ import {
   Button,
   Select,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
 
 export const EditModal = ({ isOpen, onClose, event, onSave }) => {
@@ -22,10 +23,29 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
     const { name, value } = e.target;
     setEditedEvent({ ...editedEvent, [name]: value });
   };
+  const toast = useToast();
+  const handleSave = async () => {
+    try {
+      await onSave(editedEvent);
+      onClose();
 
-  const handleSave = () => {
-    onSave(editedEvent);
-    onClose();
+      // Display the toast message
+      toast({
+        title: 'Event updated.',
+        status: 'success',
+        duration: 5000, // Set the duration of the toast message
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Error updating event:', error);
+      toast({
+        title: 'An error occurred.',
+        description: 'Failed to update event.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

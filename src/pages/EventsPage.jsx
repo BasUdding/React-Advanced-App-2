@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { EventCard } from '../components/EventCard';
+import { AddEventButton } from '../components/AddButton';
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -134,6 +135,7 @@ export const EventsPage = () => {
           />
         ))}
       </Flex>
+      <AddEventButton />
     </>
   );
 };

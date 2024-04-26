@@ -32,8 +32,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
       <RouterProvider router={router} />
-
-      <AddEventButton />
     </ChakraProvider>
   </React.StrictMode>
 );

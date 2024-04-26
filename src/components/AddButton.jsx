@@ -15,6 +15,7 @@ import {
   Select,
   Stack,
   Checkbox,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -44,7 +45,7 @@ export const AddEventButton = () => {
       [category]: !categories[category],
     });
   };
-
+  const toast = useToast();
   const handleSubmit = async () => {
     try {
       const categoryMapping = {
@@ -95,8 +96,24 @@ export const AddEventButton = () => {
 
       // Close the modal
       onClose();
+      toast({
+        title: 'Event added.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error('Error adding event:', error);
+      toast({
+        title: 'An error occurred.',
+        description: 'Failed to add event.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

@@ -99,9 +99,7 @@ export const EventPage = () => {
       console.error('Error updating event:', error);
     }
   };
-  const handleNavigateHome = () => {
-    window.location.href = '/'; // Navigate to the home page
-  };
+
   const handleDelete = async () => {
     try {
       const response = await fetch(`http://localhost:3000/events/${eventId}`, {
@@ -117,8 +115,8 @@ export const EventPage = () => {
     } catch (error) {
       console.error('Error deleting event:', error);
     }
-    handleNavigateHome();
   };
+
   if (!event || !creator) {
     return <div>Loading...</div>;
   }
@@ -146,7 +144,7 @@ export const EventPage = () => {
         <img src={event.image} alt={event.title} />
       </div>
 
-      {/* Edit button */}
+      {/* Edit and delete buttons */}
       <DeleteEvent event={event} onDelete={handleDelete} />
       <EditButton onEdit={handleEdit} />
       <EditModal
