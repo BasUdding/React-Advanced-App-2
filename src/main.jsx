@@ -6,6 +6,8 @@ import { EventsPage } from './pages/EventsPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Root } from './components/Root';
 
+import { AddEventButton } from './components/AddButton';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -30,6 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
       <RouterProvider router={router} />
+
+      <AddEventButton />
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
