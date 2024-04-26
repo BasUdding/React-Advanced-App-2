@@ -12,6 +12,7 @@ import {
   Input,
   Button,
   Select,
+  Textarea,
 } from '@chakra-ui/react';
 
 export const EditModal = ({ isOpen, onClose, event, onSave }) => {
@@ -44,9 +45,35 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Description</FormLabel>
-            <Input
+            <Textarea
               name='description'
               value={editedEvent?.description || ''} // Ensure value is defined
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Image URL</FormLabel>
+            <Input
+              name='image'
+              value={editedEvent?.image || ''} // Ensure value is defined
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Start Time</FormLabel>
+            <Input
+              type='datetime-local'
+              name='start-time'
+              value={editedEvent?.startTime || ''} // Ensure value is defined
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>End Time</FormLabel>
+            <Input
+              type='datetime-local'
+              name='end-time'
+              value={editedEvent?.endTime || ''} // Ensure value is defined
               onChange={handleChange}
             />
           </FormControl>

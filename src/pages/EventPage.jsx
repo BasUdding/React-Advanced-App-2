@@ -15,9 +15,11 @@ import {
 import { useParams } from 'react-router-dom';
 import { EditButton } from '../components/EditButton';
 import { EditModal } from '../components/EditModal';
+import { DeleteEvent } from '../components/DeleteEvent';
 
 export const EventPage = () => {
   const { eventId } = useParams();
+
   const [event, setEvent] = useState(null);
   const [categories, setCategories] = useState([]);
   const [creator, setCreator] = useState(null);
@@ -65,14 +67,22 @@ export const EventPage = () => {
     setEditedEvent(null);
   };
 
-  const handleSubmitEdit = async () => {
+  const handleSaveEdit = (editedEventData) => {
+    // Update event state with edited event data
+    setEvent(editedEventData);
+
+    // Trigger handleSubmitEdit to send updated data to backend
+    handleSubmitEdit(editedEventData);
+  };
+
+  const handleSubmitEdit = async (editedEventData) => {
     try {
       const response = await fetch(`http://localhost:3000/events/${eventId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(editedEvent),
+        body: JSON.stringify(editedEventData),
       });
 
       if (!response.ok) {
@@ -84,13 +94,31 @@ export const EventPage = () => {
       console.log('PUT request successful. Response:', responseData);
 
       // Update the event state with the edited event
-      setEvent(editedEvent);
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating event:', error);
     }
   };
+  const handleNavigateHome = () => {
+    window.location.href = '/'; // Navigate to the home page
+  };
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+        method: 'DELETE',
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to delete event');
+      }
+
+      // Log the response status
+      console.log('DELETE request successful.');
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+    handleNavigateHome();
+  };
   if (!event || !creator) {
     return <div>Loading...</div>;
   }
@@ -119,14 +147,13 @@ export const EventPage = () => {
       </div>
 
       {/* Edit button */}
-
+      <DeleteEvent event={event} onDelete={handleDelete} />
       <EditButton onEdit={handleEdit} />
       <EditModal
         isOpen={isEditing}
         onClose={handleCloseEditModal}
-        event={event}
-        onSave={handleSubmitEdit}
-        eventId={eventId}
+        event={editedEvent || event} // Pass edited event or original event
+        onSave={handleSaveEdit} // Pass the handleSaveEdit function
       />
     </div>
   );

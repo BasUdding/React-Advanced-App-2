@@ -1,21 +1,8 @@
-import {
-  Box,
-  Image,
-  Heading,
-  Text,
-  Button,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Box, Image, Heading, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-export const EventCard = ({ event, categories, onDelete }) => {
+export const EventCard = ({ event, categories }) => {
   const getCategoryNames = () => {
     if (!categories || categories.length === 0 || !event.categoryIds) {
       return '';
@@ -28,13 +15,6 @@ export const EventCard = ({ event, categories, onDelete }) => {
       .join(', ');
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleDelete = () => {
-    onDelete(event.id);
-    onClose();
-  };
-
   return (
     <Box
       borderWidth='1px'
@@ -44,23 +24,6 @@ export const EventCard = ({ event, categories, onDelete }) => {
       maxW='300px'
       shadow='md'
     >
-      <Button colorScheme='red' onClick={onOpen}>
-        Delete
-      </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Delete Event</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Are you sure you want to delete {event.title}?</ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleDelete}>
-              Confirm
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
       <Link to={`/event/${event.id}`}>
         <Image
           src={event.image}
