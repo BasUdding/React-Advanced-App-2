@@ -7,6 +7,7 @@ import {
   Select,
   Text,
   Checkbox,
+  Center,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { EventCard } from '../components/EventCard';
@@ -95,36 +96,44 @@ export const EventsPage = () => {
       <Heading textAlign='center' mt={8} mb={4}>
         All Events
       </Heading>
-      <Input
-        placeholder='Search events...'
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <Center>
+        <Input
+          placeholder='Search events...'
+          w={450}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
 
-      {/* Category Filters */}
-      <Flex>
-        <Checkbox
-          isChecked={selectedCategories.includes(1)}
-          onChange={() => toggleCategoryFilter(1)}
-        >
-          Sports
-        </Checkbox>
-        <Checkbox
-          isChecked={selectedCategories.includes(2)}
-          onChange={() => toggleCategoryFilter(2)}
-        >
-          Games
-        </Checkbox>
-        <Checkbox
-          isChecked={selectedCategories.includes(3)}
-          onChange={() => toggleCategoryFilter(3)}
-        >
-          Relaxation
-        </Checkbox>
-        {/* Add more checkboxes for other categories */}
-      </Flex>
+        <Flex flexWrap='wrap'>
+          <Box mx={2}>
+            <Checkbox
+              isChecked={selectedCategories.includes(1)}
+              onChange={() => toggleCategoryFilter(1)}
+            >
+              Sports
+            </Checkbox>
+          </Box>
 
-      {/* Display Filtered Events */}
+          <Box mx={2}>
+            <Checkbox
+              isChecked={selectedCategories.includes(2)}
+              onChange={() => toggleCategoryFilter(2)}
+            >
+              Games
+            </Checkbox>
+          </Box>
+
+          <Box mx={2}>
+            <Checkbox
+              isChecked={selectedCategories.includes(3)}
+              onChange={() => toggleCategoryFilter(3)}
+            >
+              Relaxation
+            </Checkbox>
+          </Box>
+          <AddEventButton />
+        </Flex>
+      </Center>
       <Flex flexWrap='wrap' justifyContent='center'>
         {filteredEventsByCategories.map((event) => (
           <EventCard
@@ -135,7 +144,6 @@ export const EventsPage = () => {
           />
         ))}
       </Flex>
-      <AddEventButton />
     </>
   );
 };

@@ -23,13 +23,15 @@ export const EventCard = ({ event, categories }) => {
       m='4'
       maxW='300px'
       shadow='md'
+      overflow='hidden'
     >
       <Link to={`/event/${event.id}`}>
         <Image
           src={event.image}
           alt={event.title}
-          maxW='100%'
-          mb='2'
+          width='100%'
+          height='200px'
+          objectFit='cover'
           borderRadius='lg'
         />
         <Heading as='h2' size='md' mb='2' textAlign='center' color='teal.500'>

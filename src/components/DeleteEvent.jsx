@@ -58,7 +58,7 @@ export const DeleteEvent = ({ event, onDelete }) => {
           <ModalCloseButton />
           <ModalBody>Are you sure you want to delete {event.title}?</ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleDelete}>
+            <Button colorScheme='red' mr={3} onClick={handleDelete}>
               Confirm
             </Button>
             <Button onClick={onClose}>Cancel</Button>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
+  Box,
+  Heading,
+  Text,
+  Image,
+  VStack,
+  HStack,
+  Divider,
+  Flex,
   Button,
+  Tag,
+  Center,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { EditButton } from '../components/EditButton';
@@ -128,31 +128,69 @@ export const EventPage = () => {
   });
 
   return (
-    <div>
-      <h1>Event Details</h1>
-      <div>
-        <h2>Title: {event.title}</h2>
-        <p>Description: {event.description}</p>
-        <p>Start Time: {event.startTime}</p>
-        <p>End Time: {event.endTime}</p>
-        <p>Categories: {eventCategories.join(', ')}</p>
-        {/* Display creator information */}
-        <div>
-          <p>Created By: {creator.name}</p>
-          <img src={creator.image} alt={creator.name} />
-        </div>
-        <img src={event.image} alt={event.title} />
-      </div>
-
-      {/* Edit and delete buttons */}
-      <DeleteEvent event={event} onDelete={handleDelete} />
-      <EditButton onEdit={handleEdit} />
+    <Box
+      borderWidth='1px'
+      borderRadius='lg'
+      overflow='hidden'
+      boxShadow='md'
+      p='4'
+      maxW='900px'
+      m='auto'
+    >
+      <Heading size='lg' mb='4'>
+        Event Details
+      </Heading>
+      <Box mb='4'>
+        <Image
+          src={event.image}
+          alt={event.title}
+          w='100%'
+          h='300px'
+          objectFit='cover'
+          borderRadius='lg'
+        />
+      </Box>
+      <Box mb='4'>
+        <Center>
+          <Heading size='md' mb='2'>
+            {event.title}
+          </Heading>
+        </Center>
+        <Text mb='2'>
+          <b>Description:</b> {event.description}
+        </Text>
+        <Text mb='2'>
+          <b>Start Time:</b> {event.startTime}
+        </Text>
+        <Text mb='2'>
+          <b>End Time:</b> {event.endTime}
+        </Text>
+        <Text mb='2'>
+          <b>Categories:</b> {eventCategories.join(', ')}
+        </Text>
+        <Flex align='center'>
+          <Text mb='0'>
+            <b>Created By:</b> {creator.name}
+          </Text>
+          <Image
+            src={creator.image}
+            alt={creator.name}
+            boxSize='100px'
+            borderRadius='full'
+            ml='2'
+          />
+        </Flex>
+      </Box>
+      <Flex justify='space-between' mb='4'>
+        <DeleteEvent event={event} onDelete={handleDelete} />
+        <EditButton onEdit={handleEdit} />
+      </Flex>
       <EditModal
         isOpen={isEditing}
         onClose={handleCloseEditModal}
-        event={editedEvent || event} // Pass edited event or original event
-        onSave={handleSaveEdit} // Pass the handleSaveEdit function
+        event={editedEvent || event}
+        onSave={handleSaveEdit}
       />
-    </div>
+    </Box>
   );
 };
