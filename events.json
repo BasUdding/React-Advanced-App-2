@@ -64,6 +64,25 @@
       "location": "Shavasana Yoga School",
       "startTime": "2023-03-09T06:00:00.000Z",
       "endTime": "2023-03-09T07:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "createdBy": 2,
+      "title": "Test",
+      "description": "Testtest",
+      "image": "https://media.cnn.com/api/v1/images/stellar/prod/221120140844-01-football-soccer-history-world-cup-spt-intl.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp",
+      "categoryIds": [
+        1,
+        2,
+        3
+      ],
+      "location": "Field",
+      "startTime": "",
+      "endTime": "",
+      "categories": [
+        "games",
+        "relaxation"
+      ]
     }
   ],
   "categories": [
