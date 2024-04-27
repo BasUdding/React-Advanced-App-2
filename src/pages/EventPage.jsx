@@ -35,7 +35,6 @@ export const EventPage = () => {
         }
         const eventData = await response.json();
         setEvent(eventData);
-        // Fetch categories
         const categoriesResponse = await fetch(
           'http://localhost:3000/categories'
         );
@@ -59,7 +58,7 @@ export const EventPage = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedEvent({ ...event }); // Copy the event object for editing
+    setEditedEvent({ ...event });
   };
 
   const handleCloseEditModal = () => {
@@ -68,10 +67,8 @@ export const EventPage = () => {
   };
 
   const handleSaveEdit = (editedEventData) => {
-    // Update event state with edited event data
     setEvent(editedEventData);
 
-    // Trigger handleSubmitEdit to send updated data to backend
     handleSubmitEdit(editedEventData);
   };
 
@@ -89,11 +86,8 @@ export const EventPage = () => {
         throw new Error('Failed to update event');
       }
 
-      // Log the response status and data
       const responseData = await response.json();
-      console.log('PUT request successful. Response:', responseData);
 
-      // Update the event state with the edited event
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating event:', error);
@@ -110,7 +104,6 @@ export const EventPage = () => {
         throw new Error('Failed to delete event');
       }
 
-      // Log the response status
       console.log('DELETE request successful.');
     } catch (error) {
       console.error('Error deleting event:', error);
@@ -120,8 +113,6 @@ export const EventPage = () => {
   if (!event || !creator) {
     return <div>Loading...</div>;
   }
-
-  // Map category IDs to category names
   const eventCategories = event.categoryIds.map((categoryId) => {
     const category = categories.find((cat) => cat.id === categoryId);
     return category ? category.name : 'Unknown';
