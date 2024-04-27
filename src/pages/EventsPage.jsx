@@ -48,7 +48,7 @@ export const EventsPage = () => {
     fetchEvents();
     fetchCategories();
     console.log('useEffect was rendered');
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, []);
 
   const deleteEvent = async (eventId) => {
     try {
@@ -58,8 +58,6 @@ export const EventsPage = () => {
       if (!response.ok) {
         throw new Error('Failed to delete event');
       }
-      // Optionally, update local state or perform other actions
-      console.log('Event deleted successfully');
     } catch (error) {
       console.error('Error deleting event:', error);
     }
@@ -74,12 +72,10 @@ export const EventsPage = () => {
       }
     });
   };
-  // Filter events based on search query
   const filteredEvents = events.filter((event) =>
     event.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Filter events based on selected categories
   const filteredEventsByCategories =
     selectedCategories.length > 0
       ? filteredEvents.filter(
