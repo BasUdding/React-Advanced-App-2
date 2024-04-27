@@ -24,7 +24,6 @@ export const AddEventButton = () => {
   const [events, setEvents] = useState('');
 
   const [id, setId] = useState('');
-  const [createdBy, setCreatedBy] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
@@ -81,20 +80,17 @@ export const AddEventButton = () => {
       }
 
       const eventData = await response.json();
-
-      // Update local state with the newly created event
       setEvents((prevEvents) => [...prevEvents, eventData]);
 
-      // Clear form fields
+      setId('');
       setTitle('');
       setDescription('');
       setImage('');
-      setCategoryIds(selectedCategoryIds); // Clear categoryIds
+      setCategoryIds(selectedCategoryIds);
       setStartTime('');
       setEndTime('');
       setLocation('');
 
-      // Close the modal
       onClose();
       toast({
         title: 'Event added.',
