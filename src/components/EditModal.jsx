@@ -11,29 +11,56 @@ import {
   FormLabel,
   Input,
   Button,
-  Select,
+  Stack,
+  Checkbox,
   Textarea,
   useToast,
 } from '@chakra-ui/react';
 
 export const EditModal = ({ isOpen, onClose, event, onSave }) => {
-  const [editedEvent, setEditedEvent] = useState(event); // Initialize with event data
+  const [editedEvent, setEditedEvent] = useState(event);
+  const [categories, setCategories] = useState({
+    sports: false,
+    games: false,
+    relaxation: false,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedEvent({ ...editedEvent, [name]: value });
   };
+  const handleCheckboxChange = (category) => {
+    setCategories({
+      ...categories,
+      [category]: !categories[category],
+    });
+  };
+
   const toast = useToast();
   const handleSave = async () => {
     try {
-      await onSave(editedEvent);
+      const categoryMapping = {
+        sports: 1,
+        games: 2,
+        relaxation: 3,
+      };
+
+      const selectedCategoryIds = Object.entries(categories)
+        .filter(([category, isSelected]) => isSelected)
+        .map(([category, _]) => categoryMapping[category]);
+
+      const editedEventData = {
+        ...editedEvent,
+        categoryIds: selectedCategoryIds,
+      };
+
+      await onSave(editedEventData);
       onClose();
 
-      // Display the toast message
       toast({
         title: 'Event updated.',
         status: 'success',
-        duration: 5000, // Set the duration of the toast message
+        duration: 5000,
         isClosable: true,
       });
     } catch (error) {
@@ -59,7 +86,7 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
             <FormLabel>Title</FormLabel>
             <Input
               name='title'
-              value={editedEvent?.title || ''} // Ensure value is defined
+              value={editedEvent?.title || ''}
               onChange={handleChange}
             />
           </FormControl>
@@ -67,7 +94,7 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
             <FormLabel>Description</FormLabel>
             <Textarea
               name='description'
-              value={editedEvent?.description || ''} // Ensure value is defined
+              value={editedEvent?.description || ''}
               onChange={handleChange}
             />
           </FormControl>
@@ -75,7 +102,7 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
             <FormLabel>Image URL</FormLabel>
             <Input
               name='image'
-              value={editedEvent?.image || ''} // Ensure value is defined
+              value={editedEvent?.image || ''}
               onChange={handleChange}
             />
           </FormControl>
@@ -84,7 +111,7 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
             <Input
               type='datetime-local'
               name='start-time'
-              value={editedEvent?.startTime || ''} // Ensure value is defined
+              value={editedEvent?.startTime || ''}
               onChange={handleChange}
             />
           </FormControl>
@@ -93,11 +120,33 @@ export const EditModal = ({ isOpen, onClose, event, onSave }) => {
             <Input
               type='datetime-local'
               name='end-time'
-              value={editedEvent?.endTime || ''} // Ensure value is defined
+              value={editedEvent?.endTime || ''}
               onChange={handleChange}
             />
           </FormControl>
-          {/* Add more form controls for other event properties */}
+          <FormControl mb={4}>
+            <FormLabel>Categories</FormLabel>
+            <Stack direction='column'>
+              <Checkbox
+                isChecked={categories.sports}
+                onChange={() => handleCheckboxChange('sports')}
+              >
+                Sports
+              </Checkbox>
+              <Checkbox
+                isChecked={categories.games}
+                onChange={() => handleCheckboxChange('games')}
+              >
+                Games
+              </Checkbox>
+              <Checkbox
+                isChecked={categories.relaxation}
+                onChange={() => handleCheckboxChange('relaxation')}
+              >
+                Relaxation
+              </Checkbox>
+            </Stack>
+          </FormControl>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme='blue' mr={3} onClick={handleSave}>
